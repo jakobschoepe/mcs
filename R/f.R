@@ -12,7 +12,7 @@ f <- function(i, param, dim, dispstr, margins, paramMargins, n, betas, link) {
     stop("\"dim\" must be a positive integer")
   }
   
-  else if (dim != length(x = param) {
+  else if (dim != length(x = param)) {
     stop("\"dim\" is misspecified")
   }
            
@@ -24,7 +24,7 @@ f <- function(i, param, dim, dispstr, margins, paramMargins, n, betas, link) {
     stop("\"dispstr\" must be a character value")
   }
            
-  else if (!(dispstr %in% c("ex", "ar1", "toep", "un")) {
+  else if (!(dispstr %in% c("ex", "ar1", "toep", "un"))) {
     stop("\"dispstr\" is misspecified. Currently available structures are: \"ex\" for exchangeable, \"ar1\" for AR(1), \"toep\" for Toeplitz or \"un\" for unstructured")
   }
   
