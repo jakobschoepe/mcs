@@ -1,5 +1,5 @@
 f <- function(i, param, dim, dispstr, margins, paramMargins, n, betas, link) {
-  # Check passed arguments to smoothly run subsequent computations
+  # Check passed arguments to smoothly run subsequent commands
   if (!is.vector(x = param)) {
     stop("\"param\" must be a real vector")
   }
@@ -14,6 +14,10 @@ f <- function(i, param, dim, dispstr, margins, paramMargins, n, betas, link) {
   
   else if (dim != length(x = param) {
     stop("\"dim\" is misspecified")
+  }
+           
+  else if (length(x = dim) > 1) {
+    stop("\"dim\" must be a positive integer")
   }
   
   else if (!is.character(x = dispstr)) {
@@ -32,33 +36,52 @@ f <- function(i, param, dim, dispstr, margins, paramMargins, n, betas, link) {
     stop("\"paramMargins\" must be a list")
   }
   
+  else if (!is.integer(x = n)) {
+    stop("\"n\" must be a positive integer")
+  }
+    
+  else if (length(x = n) > 1) {
+    stop("\"n\" must be a positive integer")
+  }
+           
+  else if (!is.numeric(x = betas)) {
+    stop("\"betas\" must be a numeric vector")
+  }
+           
+  else if (!is.character(link)) {
+    stop("\"link\" must be a character value")
+  }
+           
+  else if(link == "logit" | link == "log") {
+    stop("\"link\" is misspecified. Currently available link functions are: \"logit\" and \"log\"")
+  } 
   
+  else {  
+    # Store the random number generator state
+    seed <- .Random.seed
   
-  # Store the random number generator state
-  seed <- .Random.seed
+    # Predefine a normal copula
+    tmp1 <- copula::normalCopula(param = param, dim = dim, dispstr = dispstr)
+    tmp2 <- copula::mvdc(copula = tmp1, margins = margins, paramMargins = paramMargins)
   
-  # Predefine a normal copula
-  tmp1 <- copula::normalCopula(param = param, dim = dim, dispstr = dispstr)
-  tmp2 <- copula::mvdc(copula = tmp1, margins = margins, paramMargins = paramMargins)
+    # Generate random variables from marginal distributions
+    simdata <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = tmp2))
   
-  # Generate random variables from marginal distributions
-  simdata <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = tmp2))
+    # Predefine linear combination
+    b <- model.matrix(~ ., data = simdata) %*% betas
   
-  # Predefine true coefficients
+    #  
+    if (link == "logit") {
+      pr <- 1 / (1 + exp(-b))
+    }
   
-  # Predefine linear combination
-  b <- b0 + b1 * simdata$V1 + b2 * simdata$V2
-  
-  # 
-  pr <- 1 / (1 + exp(-b))
-  
-  # Generate random variables from a binomial distribution
-  simdata$y <- rbinom(n = n, size = 1, prob = pr)
-  
-  # Fit the binomial logistic regression model
-  
-  
-  
-  return(x = fit)
+    if (link == "log") {
+      pr <- exp(b)
+    }
+           
+    # Generate random variables from a binomial distribution
+    simdata$y <- rbinom(n = n, size = 1, prob = pr) 
+    }
+  return(x = list(seed = seed, data = simdata))
 }
   
