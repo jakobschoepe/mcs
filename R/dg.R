@@ -74,9 +74,13 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"link\" must be a character value")
   }
            
-  else if(link == "logit" | link == "log") {
+  else if (link != "logit" & link != "log") {
     stop("\"link\" is misspecified. Currently available link functions are: \"logit\" and \"log\"")
   } 
+  
+  else if (!exists(".Random.seed")) {
+    stop("Please set a seed for the pseudo-random number generator")
+  }
   
   else {  
     # Store the random number generator state
