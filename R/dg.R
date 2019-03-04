@@ -65,6 +65,10 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   else if (!is.numeric(x = betas)) {
     stop("\"betas\" must be a numeric vector")
   }
+  
+  else if (length(x = betas) != dim) {
+    stop("\"betas\" must be equal to \"dim\"")
+  }
            
   else if (!is.character(link)) {
     stop("\"link\" must be a character value")
@@ -99,7 +103,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
            
     # Generate random variables from a binomial distribution
     simdata$y <- rbinom(n = n, size = 1, prob = pr) 
+    return(x = list(seed = seed, data = simdata))
     }
-  return(x = list(seed = seed, data = simdata))
 }
   
