@@ -1,19 +1,19 @@
 #' @title Generating pseudo-random data for Monte Carlo simulations using a normal copula.
-#' @description \code{dg} generates pseudo-random data for Monte Carlo simulations 
-#' @param i 
+#' @description \code{dg} generates pseudo-random data for Monte Carlo simulations using a normal copula with user-defined marginal probability distributions.
+#' @param i Index of the repetition (can be ignored).
 #' @param param A numeric vector specifying the dispersion matrix (see \code{copula} package).
 #' @param dim An integer specifying the dimension of the copula (see \code{copula} package).
 #' @param dispstr A character string specifying the dispersion structure (see \code{copula} package): autoregressive of order 1 (ar1), exchangeable (ex), Toeplitz (toep), and unstructured (un).
-#' @param margins A character vector specifying the marginal distributions (see \code{copula} package).
-#' @param paramMargins An object of class \code{list} giving the parameter values of the marginal distributions (see \code{copula} package).
+#' @param margins A character vector specifying the marginal probability distributions (see \code{copula} package).
+#' @param paramMargins An object of class \code{list} giving the parameter values of the marginal probability distributions (see \code{copula} package).
 #' @param n An integer specifying the number of observations to be generated.
 #' @param f A model formula.
-#' @param betas A numeric vector specifying the true model parameters/estimands.
+#' @param betas A numeric vector specifying the true model parameters.
 #' @param link A character string specifying the link function for model fitting ("logit" or "log").
-#' @details \code{dg} was built as part of the design of a Monte Carlo simulation, and serves a special-purpose only.
+#' @details Please note that \code{dg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @return A list containing the following elements:
-#' \item{seed}{An integer vector containing the random number generator state.}
-#' \item{data}{A data table containing the pseudo-random generated data.}
+#' \item{seed}{An integer vector containing the state of the random number generator.}
+#' \item{data}{A data table containing pseudo-random generated data.}
 #' @references Yan J (2007) Enjoy the joy of copulas: With a package copula. J Stat Softw, 21:1-21
 
 dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link) {
@@ -70,7 +70,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"betas\" must be equal to \"dim\"")
   }
            
-  else if (!is.character(link)) {
+  else if (!is.character(x = link)) {
     stop("\"link\" must be a character value")
   }
            
@@ -78,7 +78,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"link\" is misspecified. Currently available link functions are: \"logit\" and \"log\"")
   } 
   
-  else if (!exists(".Random.seed")) {
+  else if (!exists(x = ".Random.seed")) {
     stop("Please set a seed for the pseudo-random number generator")
   }
   
@@ -106,8 +106,9 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     }
            
     # Generate random variables from a binomial distribution
-    simdata$y <- rbinom(n = n, size = 1, prob = pr) 
+    simdata$y <- rbinom(n = n, size = 1, prob = pr)
+    
     return(x = list(seed = seed, data = simdata))
-    }
+  }
 }
   
