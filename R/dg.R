@@ -87,14 +87,14 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     seed <- .Random.seed
   
     # Predefine a normal copula
-    tmp1 <- copula::normalCopula(param = param, dim = dim, dispstr = dispstr)
-    tmp2 <- copula::mvdc(copula = tmp1, margins = margins, paramMargins = paramMargins)
+    copula_tmp <- copula::normalCopula(param = param, dim = dim, dispstr = dispstr)
+    mvdc_tmp <- copula::mvdc(copula = copula_tmp, margins = margins, paramMargins = paramMargins)
   
     # Generate random variables from marginal distributions
-    simdata <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = tmp2))
+    sim_data <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = mvdc_tmp))
   
     # Predefine linear combinations
-    b <- model.matrix(f, data = simdata) %*% betas
+    b <- model.matrix(f, data = sim_data) %*% betas
   
     #  
     if (link == "logit") {
@@ -106,9 +106,9 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     }
            
     # Generate random variables from a binomial distribution
-    simdata$y <- rbinom(n = n, size = 1, prob = pr)
+    sim_data$y <- rbinom(n = n, size = 1, prob = pr)
     
-    return(x = list(seed = seed, data = simdata))
+    return(x = list(seed = seed, data = sim_data))
   }
 }
   
