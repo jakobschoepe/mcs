@@ -41,14 +41,14 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"dim\" must be a positive integer")
   }
   
-  else if (dim != length(x = param)) {
-    stop("\"dim\" is misspecified")
-  }
-           
   else if (length(x = dim) > 1) {
     stop("\"dim\" must be a positive integer")
   }
   
+  else if (dim != length(x = param)) {
+    stop("\"dim\" is misspecified")
+  }
+   
   else if (!is.character(x = dispstr)) {
     stop("\"dispstr\" must be a character value")
   }
