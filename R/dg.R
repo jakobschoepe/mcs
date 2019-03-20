@@ -29,7 +29,7 @@
 
 dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link) {
   # Check passed arguments to smoothly run subsequent commands
-  if (!is.vector(x = param)) {
+  if (!is.numeric(x = param)) {
     stop("\"param\" must be a real vector")
   }
   
@@ -83,6 +83,10 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     
   else if (length(x = n) != 1L) {
     stop("single positive integer for \"n\" expected")
+  }
+  
+  else if (!inherits(x = f, what = "formula")) {
+    stop("\"f\" must be of class \"formula\"")
   }
            
   else if (!is.numeric(x = betas)) {
