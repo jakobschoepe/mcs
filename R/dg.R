@@ -41,8 +41,8 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"dim\" must be a positive integer")
   }
   
-  else if (length(x = dim) > 1) {
-    stop("\"dim\" must be a positive integer")
+  else if (length(x = dim) != 1L) {
+    stop("single positive integer for \"dim\" expected")
   }
   
   else if (dim != length(x = param)) {
@@ -52,25 +52,37 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   else if (!is.character(x = dispstr)) {
     stop("\"dispstr\" must be a character value")
   }
+  
+  else if (length(x = dispstr) != 1L) {
+    stop("single character value for \"dispstr\" expected")
+  }
            
   else if (!(dispstr %in% c("ex", "ar1", "toep", "un"))) {
     stop("\"dispstr\" is misspecified. Currently available structures are: \"ex\" for exchangeable, \"ar1\" for AR(1), \"toep\" for Toeplitz or \"un\" for unstructured")
   }
   
-  else if(!is.vector(x = margins)) {
+  else if (!is.character(x = margins)) {
     stop("\"margins\" must be a character vector")
   }
     
-  else if(!is.list(x = paramMargins)) {
+  else if (length(x = margins) != dim) {
+    stop("\"margins\" must be a character vector of length \"dim\"")
+  }    
+    
+  else if (!is.list(x = paramMargins)) {
     stop("\"paramMargins\" must be a list")
+  }
+  
+  else if (length(x = paramMargins) != dim) {
+    stop("\"paramMargins\" must be a list of length \"dim\"")
   }
   
   else if (!is.integer(x = n)) {
     stop("\"n\" must be a positive integer")
   }
     
-  else if (length(x = n) > 1) {
-    stop("\"n\" must be a positive integer")
+  else if (length(x = n) != 1L) {
+    stop("single positive integer for \"n\" expected")
   }
            
   else if (!is.numeric(x = betas)) {
@@ -78,15 +90,19 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   }
   
   else if (length(x = betas) != dim) {
-    stop("\"betas\" must be equal to \"dim\"")
+    stop("\"betas\" must be a numeric vector of length \"dim\"")
   }
            
   else if (!is.character(x = link)) {
     stop("\"link\" must be a character value")
   }
+  
+  else if (length(x = link) != 1L) {
+    stop("single character value for \"link\" expected")
+  }
            
-  else if (link != "logit" & link != "log") {
-    stop("\"link\" is misspecified. Currently available link functions are: \"logit\" and \"log\"")
+  else if (!(link %in% c("log", "logit"))) {
+    stop("\"link\" is misspecified. Currently available link functions are: \"log\" and \"logit\"")
   } 
   
   else if (!exists(x = ".Random.seed")) {
