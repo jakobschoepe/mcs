@@ -31,22 +31,22 @@
 
 dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link) {
   # Check passed arguments to smoothly run subsequent commands
-  if (!is.numeric(x = param)) {
-    stop("\"param\" must be a real vector")
-  }
-  
-  else if (length(x = param) != (dim * (dim - 1)) / 2) {
-    stop("\"param\" must be a real vector of length ", (dim * (dim - 1)) / 2, " or \"dim\" has been misspecified")
-  }
-  
-  else if (!is.integer(x = dim)) {
+  if (!is.integer(x = dim)) {
     stop("\"dim\" must be a positive integer")
   }
   
   else if (length(x = dim) != 1L) {
     stop("single positive integer for \"dim\" expected")
   }
-   
+  
+  else if (!is.numeric(x = param)) {
+    stop("\"param\" must be a real vector")
+  }
+  
+  else if (length(x = param) != (dim * (dim - 1)) / 2) {
+    stop("\"param\" must be a real vector of length ", (dim * (dim - 1)) / 2, " or \"dim\" has been misspecified")
+  }
+     
   else if (!is.character(x = dispstr)) {
     stop("\"dispstr\" must be a character string")
   }
@@ -55,7 +55,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("single character string for \"dispstr\" expected")
   }
            
-  else if (!(dispstr %in% c("ex", "ar1", "toep", "un"))) {
+  else if (!(dispstr %in% c("ar1", "ex", "toep", "un"))) {
     stop("\"dispstr\" is misspecified. Currently available structures are: \"ar1\" for AR(1), \"ex\" for exchangeable, \"toep\" for Toeplitz or \"un\" for unstructured")
   }
   
