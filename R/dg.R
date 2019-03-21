@@ -1,5 +1,6 @@
 #' @title Generating pseudo-random data for Monte Carlo simulations using a normal copula.
 #' @description \code{dg} generates pseudo-random data for Monte Carlo simulations using a normal copula with user-defined marginal probability distributions.
+#' @usage dg(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link) 
 #' @param i Index of the repetition (can be ignored).
 #' @param param A numeric vector specifying the dispersion matrix (see \code{copula} package).
 #' @param dim An integer specifying the dimension of the copula (see \code{copula} package).
@@ -9,12 +10,13 @@
 #' @param n An integer specifying the number of observations to be generated.
 #' @param f A model formula.
 #' @param betas A numeric vector specifying the true model parameters.
-#' @param link A character string specifying the link function for model fitting ("logit" or "log").
-#' @details Please note that \code{dg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' @param link A character string specifying the link function for model fitting ("log" or "logit").
 #' @return A list containing the following elements:
-#' \item{seed}{An integer vector containing the state of the random number generator.}
+#' \item{seed}{An integer vector containing the state of the random number generator that was used to generate the data.}
 #' \item{data}{A data table containing pseudo-random generated data.}
 #' @references Yan J (2007) Enjoy the joy of copulas: With a package copula. J Stat Softw, 21:1-21
+#' @note Please note that \code{dg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' @author Jakob Schöpe
 #' @example
 #' param <- c(0.0,
 #'            0.3, 0.1,
@@ -50,15 +52,15 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   }
    
   else if (!is.character(x = dispstr)) {
-    stop("\"dispstr\" must be a character value")
+    stop("\"dispstr\" must be a character string")
   }
   
   else if (length(x = dispstr) != 1L) {
-    stop("single character value for \"dispstr\" expected")
+    stop("single character string for \"dispstr\" expected")
   }
            
   else if (!(dispstr %in% c("ex", "ar1", "toep", "un"))) {
-    stop("\"dispstr\" is misspecified. Currently available structures are: \"ex\" for exchangeable, \"ar1\" for AR(1), \"toep\" for Toeplitz or \"un\" for unstructured")
+    stop("\"dispstr\" is misspecified. Currently available structures are: \"ar1\" for AR(1), \"ex\" for exchangeable, \"toep\" for Toeplitz or \"un\" for unstructured")
   }
   
   else if (!is.character(x = margins)) {
@@ -98,11 +100,11 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   }
            
   else if (!is.character(x = link)) {
-    stop("\"link\" must be a character value")
+    stop("\"link\" must be a character string")
   }
   
   else if (length(x = link) != 1L) {
-    stop("single character value for \"link\" expected")
+    stop("single character string for \"link\" expected")
   }
            
   else if (!(link %in% c("log", "logit"))) {
@@ -110,7 +112,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   } 
   
   else if (!exists(x = ".Random.seed")) {
-    stop("Please set a seed for the pseudo-random number generator")
+    stop("state for the pseudo-random number generator has not been set")
   }
   
   else {  
@@ -121,25 +123,25 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     copula_tmp <- copula::normalCopula(param = param, dim = dim, dispstr = dispstr)
     mvdc_tmp <- copula::mvdc(copula = copula_tmp, margins = margins, paramMargins = paramMargins)
   
-    # Generate random variables from marginal distributions
-    sim_data <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = mvdc_tmp))
+    # Generate random variables from marginal probability distributions
+    data_tmp <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = mvdc_tmp))
   
     # Predefine linear combinations
-    b <- model.matrix(f, data = sim_data) %*% betas
+    b <- model.matrix(f, data = data_tmp) %*% betas
   
     #  
-    if (link == "logit") {
-      pr <- 1 / (1 + exp(-b))
-    }
-  
     if (link == "log") {
       pr <- exp(b)
     }
-           
-    # Generate random variables from a binomial distribution
-    sim_data$y <- rbinom(n = n, size = 1, prob = pr)
     
-    return(x = list(seed = seed, data = sim_data))
+    if (link == "logit") {
+      pr <- 1 / (1 + exp(-b))
+    }
+             
+    # Generate random variables from a binomial probability distribution
+    data_tmp$y <- rbinom(n = n, size = 1, prob = pr)
+    
+    return(x = list(seed = seed, data = data_tmp))
   }
 }
   
