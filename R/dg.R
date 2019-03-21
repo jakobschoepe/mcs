@@ -33,8 +33,8 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"param\" must be a real vector")
   }
   
-  else if (length(x = param) != dim) {
-    stop("\"param\" must be a real vector of length \"dim\"")
+  else if (length(x = param) != (param * (param - 1)) / 2) {
+    stop("\"param\" must be a real vector of length ", (param * (param - 1)) / 2)
   }
   
   else if (!is.integer(x = dim)) {
@@ -93,7 +93,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"betas\" must be a numeric vector")
   }
   
-  else if (length(x = betas) != dim) {
+  else if (length(x = betas) != dim + 1) {
     stop("\"betas\" must be a numeric vector of length \"dim\"")
   }
            
