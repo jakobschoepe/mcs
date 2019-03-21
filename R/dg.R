@@ -35,8 +35,8 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"param\" must be a real vector")
   }
   
-  else if (length(x = param) != (param * (param - 1)) / 2) {
-    stop("\"param\" must be a real vector of length ", (param * (param - 1)) / 2)
+  else if (length(x = param) != (dim * (dim - 1)) / 2) {
+    stop("\"param\" must be a real vector of length ", (dim * (dim - 1)) / 2, " or \"dim\" has been misspecified")
   }
   
   else if (!is.integer(x = dim)) {
@@ -45,10 +45,6 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   
   else if (length(x = dim) != 1L) {
     stop("single positive integer for \"dim\" expected")
-  }
-  
-  else if (dim != length(x = param)) {
-    stop("\"dim\" is misspecified")
   }
    
   else if (!is.character(x = dispstr)) {
