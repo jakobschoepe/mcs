@@ -125,7 +125,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     # Predefine linear combinations
     b <- model.matrix(f, data = data_tmp) %*% betas
   
-    #  
+    # Compute individual probabilities for Y  
     if (link == "log") {
       pr <- exp(b)
     }
@@ -134,8 +134,8 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
       pr <- 1 / (1 + exp(-b))
     }
              
-    # Generate random variables from a binomial probability distribution
-    data_tmp$y <- rbinom(n = n, size = 1, prob = pr)
+    # Generate a random variable from a binomial probability distribution
+    data_tmp$Y <- rbinom(n = n, size = 1, prob = pr)
     
     return(x = list(seed = seed, data = data_tmp))
   }
