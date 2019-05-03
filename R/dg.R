@@ -56,7 +56,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
   }
            
   else if (!(dispstr %in% c("ar1", "ex", "toep", "un"))) {
-    stop("\"dispstr\" is misspecified. Currently available structures are: \"ar1\" for AR(1), \"ex\" for exchangeable, \"toep\" for Toeplitz or \"un\" for unstructured")
+    stop("\"dispstr\" is misspecified")
   }
   
   else if (!is.character(x = margins)) {
