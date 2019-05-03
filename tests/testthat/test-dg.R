@@ -13,7 +13,7 @@ test_that(desc = "dg throws an error if arguments are misspecified",
                   expect_error(object = dg(param = param, dim = 4L, dispstr = c("ar1", "ex", "toep", "un"), margins = margins, paramMargins = paramMargins, n = 100L, f = ~ V1 + V2 + V3 + V4, betas = betas, link = "logit"),
                                regexp = "single character string for \"dispstr\" expected")
                   expect_error(object = dg(param = param, dim = 4L, dispstr = "vc", margins = margins, paramMargins = paramMargins, n = 100L, f = ~ V1 + V2 + V3 + V4, betas = betas, link = "logit"),
-                               regexp = "\"dispstr\" is misspecified. Currently available structures are: \"ar1\" for AR(1), \"ex\" for exchangeable, \"toep\" for Toeplitz or \"un\" for unstructured")
+                               regexp = "\"dispstr\" is misspecified")
                   expect_error(object = dg(param = param, dim = 4L, dispstr = "un", margins = NULL, paramMargins = paramMargins, n = 100L, f = ~ V1 + V2 + V3 + V4, betas = betas, link = "logit"),
                                regexp = "\"margins\" must be a character vector")
                   expect_error(object = dg(param = param, dim = 4L, dispstr = "un", margins = c("norm", "binom"), paramMargins = paramMargins, n = 100L, f = ~ V1 + V2 + V3 + V4, betas = betas, link = "logit"),
