@@ -121,7 +121,10 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, thetas, link
   
     # Generate random variables from marginal probability distributions
     data_tmp <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = mvdc_tmp))
-  
+    
+    # Rename generated random variables
+    data.table::setnames(x = data_tmp, old = colnames(data_tmp), new = sapply(X = 1:ncol(data_tmp), FUN = function(i) {sprintf("X%d", i)}))
+    
     # Predefine linear combinations
     b <- model.matrix(f, data = data_tmp) %*% thetas
   
