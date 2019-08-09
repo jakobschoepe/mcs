@@ -1,7 +1,7 @@
 #' @title Generating multiple pseudo-random data sets for Monte Carlo simulations using \code{dg}.
 #' @description \code{mdg} is a wrapper function to generate multiple pseudo-random data sets for Monte Carlo simulations using \code{dg}.
 #' @usage mdg(X, seed,...) 
-#' @param X An integer specifying the number of 
+#' @param X An integer indicating the number of pseudo-random data sets to generate.
 #' @param seed An integer vector containing the last state of the random number generator ("Mersenne-Twister") that should be used 
 #' @param ... Arguments for code{dg}
 #' @return A list containing the following elements:
@@ -22,8 +22,36 @@
 #' set.seed(seed = 123, kind = "Mersenne-Twister")
 #' myData <- mdg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100, f = f, thetas = thetas, link = "logit")
 
-mdg <- function(X, seed) {
-  if (!missing(x = seed)) {
+mdg <- function(X, export, path1, path2, seed) {
+  if (!is.integer(x = X)) {
+    stop("\"X\" must be a positive integer")
+  }
+  
+  else if (sign(x = X) == -1) {
+    stop("\"X\" must be a positive integer")
+  }
+  
+  else if (length(x = X) != 1L) {
+    stop("single positive integer for \"X\" expected")  
+  }
+  
+  else if (!is.logical(x = export)) {
+    stop("\"export\" must be a logical constant")
+  }
+  
+  else if (length(x = export) != 1L) {
+    stop("single logical constant for \"X\" expected")  
+  }
+  
+  else if (!is.character(x = path1) | !is.character(x = path2)) {
+    stop("\"path1\" and \"path2\" must be character strings")
+  }
+  
+  else if (length(x = path1) != 1L | length(x = path2) != 1L) {
+    stop("single character string for \"path1\" and \"path2\" expected")
+  }
+   
+  else if (!missing(x = seed)) {
     if (is.integer(x = seed) & length(x = seed) == 626) {
       RNGkind(kind = "Mersenne-Twister")
       .Random.seed <<- seed
@@ -42,6 +70,10 @@ mdg <- function(X, seed) {
     # Iterate dg() to generate multiple pseudo-random data sets
     data_tmp <- lapply(X = 1:X, FUN = function(i) {
         tmp <- dg(param = param, dim = dim, dispstr = dispstr, margins = margins, paramMargins = paramMargins, n = n, f = f, thetas = thetas, link = link)
+        if (isTRUE(x = export)) {
+          readr::write_csv(x = tmp$data, path = sprintf(path1, i))
+          readr::write_csv(x = tmp$seed, path = sprintf(path2, i))
+        }
         return(tmp)
       }
     )
