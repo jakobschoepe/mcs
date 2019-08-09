@@ -9,7 +9,7 @@
 #' @param paramMargins An object of class \code{list} giving the parameter values of the marginal probability distributions (see \code{copula} package).
 #' @param n An integer specifying the number of observations to be generated.
 #' @param f A model formula.
-#' @param betas A numeric vector specifying the true model parameters.
+#' @param thetas A numeric vector specifying the true model parameters.
 #' @param link A character string specifying the link function for model fitting ("log" or "logit").
 #' @return A list containing the following elements:
 #' \item{seed}{An integer vector containing the state of the random number generator that was used to generate the data.}
@@ -25,11 +25,11 @@
 #' margins <- c("norm", "binom", "binom", "norm")
 #' paramMargins <- list(list(mean = 0, sd = 1), list(size = 1, prob = 0.3), list(size = 1, prob = .1), list(mean = 20, sd = 4))
 #' f <- ~ V1 + V2 + V3 + V4
-#' betas <- c(-3.10, 0.00, -0.45, 0.22, -0.16)
+#' thetas <- c(-3.10, 0.00, -0.45, 0.22, -0.16)
 #'
-#' myData <- dg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100, f = f, betas = betas, link = "logit")
+#' myData <- dg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100, f = f, thetas = thetas, link = "logit")
 
-dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link) {
+dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, thetas, link) {
   # Check passed arguments to smoothly run subsequent commands
   if (!is.integer(x = dim)) {
     stop("\"dim\" must be a positive integer")
@@ -87,12 +87,12 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     stop("\"f\" must be of class \"formula\"")
   }
            
-  else if (!is.numeric(x = betas)) {
-    stop("\"betas\" must be a numeric vector")
+  else if (!is.numeric(x = thetas)) {
+    stop("\"thetas\" must be a numeric vector")
   }
   
-  else if (length(x = betas) != dim + 1) {
-    stop("\"betas\" must be a numeric vector of length \"dim\"")
+  else if (length(x = thetas) != dim + 1) {
+    stop("\"thetas\" must be a numeric vector of length \"dim\"")
   }
            
   else if (!is.character(x = link)) {
@@ -123,7 +123,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link)
     data_tmp <- data.table::as.data.table(copula::rMvdc(n = n, mvdc = mvdc_tmp))
   
     # Predefine linear combinations
-    b <- model.matrix(f, data = data_tmp) %*% betas
+    b <- model.matrix(f, data = data_tmp) %*% thetas
   
     # Compute individual probabilities for Y  
     if (link == "log") {
