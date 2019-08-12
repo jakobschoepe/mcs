@@ -62,7 +62,7 @@ mdg <- function(X, export = FALSE, seed, ...) {
         if (isTRUE(x = export)) {
           readr::write_csv(x = tmp$data, path = sprintf(paste0("SimData", format(Sys.time(), "_%Y%m%d_%H%M%S_"), "%d.csv"), i))
         }
-        return(tmp)
+        return(tmp$data)
     })
     
     # Store the last state of the pseudo-random number generator for possible continuation.
