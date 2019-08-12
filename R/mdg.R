@@ -52,23 +52,23 @@ mdg <- function(X, export, path1, path2, seed, ...) {
       stop("single character string for \"path1\" and \"path2\" expected")
     }  
   }
-   
-  else if (!missing(x = seed)) {
-    if (is.integer(x = seed) & length(x = seed) == 626) {
-      RNGkind(kind = "Mersenne-Twister")
-      .Random.seed <<- seed
-    }
-    
-    else {
-      stop("\"seed\" has been misspecified")
-    }
-  }
   
   else if (!exists(x = ".Random.seed")) {
     stop("state for the pseudo-random number generator has not been set")
   }
   
   else {
+    if (!missing(x = seed)) {
+      if (is.integer(x = seed) & length(x = seed) == 626) {
+        RNGkind(kind = "Mersenne-Twister")
+        .Random.seed <<- seed
+      }
+    
+      else {
+        stop("\"seed\" has been misspecified")
+      }
+    }
+    
     # Iterate dg() to generate multiple pseudo-random data sets
     data_tmp <- lapply(X = 1:X, FUN = function(i) {
         tmp <- dg(...)
