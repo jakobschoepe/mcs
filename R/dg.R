@@ -24,10 +24,10 @@
 #'
 #' margins <- c("norm", "binom", "binom", "norm")
 #' paramMargins <- list(list(mean = 0, sd = 1), list(size = 1, prob = 0.3), list(size = 1, prob = .1), list(mean = 20, sd = 4))
-#' f <- ~ V1 + V2 + V3 + V4
+#' f <- ~ X1 + X2 + X3 + X4
 #' thetas <- c(-3.10, 0.00, -0.45, 0.22, -0.16)
 #'
-#' myData <- dg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100, f = f, thetas = thetas, link = "logit")
+#' myData <- dg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
 
 dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, thetas, link) {
   # Check passed arguments to smoothly run subsequent commands
