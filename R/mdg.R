@@ -27,13 +27,13 @@ mdg <- function(X, export, path1, path2, seed, ...) {
     stop("\"X\" must be a positive integer")
   }
   
-  else if (sign(x = X) == -1) {
-    stop("\"X\" must be a positive integer")
-  }
-  
   else if (length(x = X) != 1L) {
     stop("single positive integer for \"X\" expected")  
-  }
+  }  
+  
+  else if (sign(x = X) == -1) {
+    stop("\"X\" must be a positive integer")
+  }  
   
   else if (!is.logical(x = export)) {
     stop("\"export\" must be a logical constant")
