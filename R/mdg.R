@@ -2,10 +2,11 @@
 #' @description \code{mdg} is a wrapper function to generate multiple pseudo-random data sets for Monte Carlo simulations using \code{dg}.
 #' @usage mdg(X, seed,...) 
 #' @param X An integer indicating the number of pseudo-random data sets to generate.
-#' @param seed An integer vector containing the last state of the random number generator ("Mersenne-Twister") that should be used 
-#' @param ... Arguments for code{dg}
+#' @param export A logical constant indicating if generated pseudo-random data sets should be exported to the working directory. 
+#' @param seed A optional integer vector containing the state of the random number generator ("Mersenne-Twister"). 
+#' @param ... Additional arguments for code{dg}.
 #' @return A list containing the following elements:
-#' \item{seed}{An integer vector containing the last state of the random number generator that should be used as seed to generate further data sets.}
+#' \item{seed}{An integer vector containing the last state of the random number generator.}
 #' \item{dg}{A list containing returns from \code{dg}.}
 #' @note Please note that \code{mdg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
@@ -16,11 +17,11 @@
 #'
 #' margins <- c("norm", "binom", "binom", "norm")
 #' paramMargins <- list(list(mean = 0, sd = 1), list(size = 1, prob = 0.3), list(size = 1, prob = .1), list(mean = 20, sd = 4))
-#' f <- ~ V1 + V2 + V3 + V4
+#' f <- ~ X1 + X2 + X3 + X4
 #' thetas <- c(-3.10, 0.00, -0.45, 0.22, -0.16)
 #'
 #' set.seed(seed = 123, kind = "Mersenne-Twister")
-#' myData <- mdg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100, f = f, thetas = thetas, link = "logit")
+#' myData <- mdg(X = 10L, param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
 
 mdg <- function(X, export = FALSE, seed, ...) {
   if (length(x = X) != 1L) {
@@ -61,9 +62,8 @@ mdg <- function(X, export = FALSE, seed, ...) {
         if (isTRUE(x = export)) {
           readr::write_csv(x = tmp$data, path = sprintf(paste0("SimData", format(Sys.time(), "_%Y%m%d_%H%M%S_"), "%d.csv"), i))
         }
-        return(tmp$data)
-      }
-    )
+        return(tmp)
+    })
     
     # Store the last state of the pseudo-random number generator for possible continuation.
     seed <- .Random.seed
