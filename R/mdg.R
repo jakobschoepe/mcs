@@ -76,7 +76,7 @@ mdg <- function(X, export, path1, path2, seed, ...) {
           readr::write_csv(x = tmp$data, path = sprintf(path1, i))
           readr::write_csv(x = tmp$seed, path = sprintf(path2, i))
         }
-        return(tmp$data)
+        return(unname(tmp$data))
       }
     )
     
