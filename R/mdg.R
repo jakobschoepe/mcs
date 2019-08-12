@@ -22,37 +22,23 @@
 #' set.seed(seed = 123, kind = "Mersenne-Twister")
 #' myData <- mdg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100, f = f, thetas = thetas, link = "logit")
 
-mdg <- function(X, export, path1, path2, seed, ...) {
-  if (!is.integer(x = X)) {
-    stop("\"X\" must be a positive integer")
+mdg <- function(X, export = FALSE, seed, ...) {
+  if (length(x = X) != 1L) {
+    stop("single positive integer for \"X\" expected")  
   }
   
-  else if (length(x = X) != 1L) {
-    stop("single positive integer for \"X\" expected")  
-  }  
-  
-  else if (sign(x = X) == -1) {
+  else if (!is.integer(x = X) | sign(x = X) != 1) {
     stop("\"X\" must be a positive integer")
-  }  
-  
-  else if (!is.logical(x = export)) {
-    stop("\"export\" must be a logical constant")
   }
   
   else if (length(x = export) != 1L) {
-    stop("single logical constant for \"X\" expected")  
+    stop("single logical constant for \"export\" expected")  
   }
-  
-  else if(isTRUE(export)) {
-    if (!is.character(x = path1) | !is.character(x = path2)) {
-      stop("\"path1\" and \"path2\" must be character strings")
-    }
-  
-    else if (length(x = path1) != 1L | length(x = path2) != 1L) {
-      stop("single character string for \"path1\" and \"path2\" expected")
-    }  
+    
+  else if (!is.logical(x = export)) {
+    stop("\"export\" must be a logical constant")
   }
-  
+    
   else if (!exists(x = ".Random.seed")) {
     stop("state for the pseudo-random number generator has not been set")
   }
@@ -73,8 +59,7 @@ mdg <- function(X, export, path1, path2, seed, ...) {
     data_tmp <- lapply(X = 1:X, FUN = function(i) {
         tmp <- dg(...)
         if (isTRUE(x = export)) {
-          readr::write_csv(x = tmp$data, path = sprintf(path1, i))
-          readr::write_csv(x = tmp$seed, path = sprintf(path2, i))
+          readr::write_csv(x = tmp$data, path = sprintf(paste0("SimData", format(Sys.time(), "_%Y/%m/%d_%H%M%S_"), "%d.csv"), i))
         }
         return(tmp$data)
       }
