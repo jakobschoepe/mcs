@@ -24,6 +24,7 @@
 #' myData <- mdg(X = 10L, param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
 
 mdg <- function(X, export = FALSE, seed, ...) {
+  # Check passed arguments to smoothly run subsequent commands
   if (length(x = X) != 1L) {
     stop("single positive integer for \"X\" expected")  
   }
@@ -65,7 +66,7 @@ mdg <- function(X, export = FALSE, seed, ...) {
         return(tmp$data)
     })
     
-    # Store the last state of the pseudo-random number generator for possible continuation.
+    # Store the last state of the pseudo-random number generator for possible continuation
     seed <- .Random.seed
     
     return(x = list(seed = seed, dg = data_tmp))
