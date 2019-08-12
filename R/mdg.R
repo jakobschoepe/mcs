@@ -81,6 +81,6 @@ mdg <- function(X, export, path1, path2, seed) {
     # Store the last state of the pseudo-random number generator for possible continuation.
     seed <- .Random.seed
     
-    return(x = list(seed = seed, dg = data_tmp)
+    return(x = list(seed = seed, dg = data_tmp))
   }
 }
