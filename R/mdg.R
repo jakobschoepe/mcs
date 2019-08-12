@@ -59,13 +59,13 @@ mdg <- function(X, export, path1, path2, seed, ...) {
   
   else {
     if (!missing(x = seed)) {
-      if (is.integer(x = seed) & length(x = seed) == 626) {
-        RNGkind(kind = "Mersenne-Twister")
-        .Random.seed <<- seed
+      if (!is.integer(x = seed) | length(x = seed) != 626) {
+        stop("\"seed\" has been misspecified")
       }
     
       else {
-        stop("\"seed\" has been misspecified")
+        RNGkind(kind = "Mersenne-Twister")
+        .Random.seed <<- seed
       }
     }
     
