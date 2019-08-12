@@ -59,7 +59,7 @@ mdg <- function(X, export = FALSE, seed, ...) {
     data_tmp <- lapply(X = 1:X, FUN = function(i) {
         tmp <- dg(...)
         if (isTRUE(x = export)) {
-          readr::write_csv(x = tmp$data, path = sprintf(paste0(getwd(), "/SimData", format(Sys.time(), "_%Y/%m/%d_%H%M%S_"), "%d.csv"), i))
+          readr::write_csv(x = tmp$data, path = sprintf(paste0(getwd(), "/SimData", format(Sys.time(), "_%Y%m%d_%H%M%S_"), "%d.csv"), i))
         }
         return(tmp$data)
       }
