@@ -7,7 +7,7 @@
 #' @param ... Additional arguments for code{dg}.
 #' @return A list containing the following elements:
 #' \item{seed}{An integer vector containing the last state of the random number generator.}
-#' \item{dg}{A list containing returns from \code{dg}.}
+#' \item{data}{A data table containing pseudo-random generated data.}
 #' @note Please note that \code{mdg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
 #' @example
@@ -69,6 +69,6 @@ mdg <- function(X, export = FALSE, seed, ...) {
     # Store the last state of the pseudo-random number generator for possible continuation
     seed <- .Random.seed
     
-    return(x = list(seed = seed, dg = data_tmp))
+    return(x = list(data = data_tmp, seed = seed))
   }
 }
