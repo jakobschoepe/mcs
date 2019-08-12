@@ -6,8 +6,8 @@
 #' @param seed A optional integer vector containing the state of the random number generator ("Mersenne-Twister"). 
 #' @param ... Additional arguments for code{dg}.
 #' @return A list containing the following elements:
+#' \item{data}{A list containing pseudo-random generated data sets.}
 #' \item{seed}{An integer vector containing the last state of the random number generator.}
-#' \item{data}{A data table containing pseudo-random generated data.}
 #' @note Please note that \code{mdg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
 #' @example
