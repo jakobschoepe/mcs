@@ -71,7 +71,7 @@ mdg <- function(X, export, path1, path2, seed, ...) {
   else {
     # Iterate dg() to generate multiple pseudo-random data sets
     data_tmp <- lapply(X = 1:X, FUN = function(i) {
-        tmp <- dg(param = param, dim = dim, dispstr = dispstr, margins = margins, paramMargins = paramMargins, n = n, f = f, thetas = thetas, link = link)
+        tmp <- dg(...)
         if (isTRUE(x = export)) {
           readr::write_csv(x = tmp$data, path = sprintf(path1, i))
           readr::write_csv(x = tmp$seed, path = sprintf(path2, i))
