@@ -1,6 +1,6 @@
 #' @title Generating multiple pseudo-random data sets using \code{dg}.
 #' @description \code{mdg} is a wrapper function to generate multiple pseudo-random data sets using \code{dg}.
-#' @usage mdg(X, seed,...) 
+#' @usage mdg(X, export = FALSE, seed, ...) 
 #' @param X An integer indicating the number of pseudo-random data sets to generate.
 #' @param export A logical constant indicating if generated pseudo-random data sets should be exported to the working directory. 
 #' @param seed A optional integer vector containing the state of the random number generator ("Mersenne-Twister"). 
