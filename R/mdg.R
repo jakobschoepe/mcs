@@ -43,12 +43,14 @@ mdg <- function(X, export, path1, path2, seed, ...) {
     stop("single logical constant for \"X\" expected")  
   }
   
-  else if (!is.character(x = path1) | !is.character(x = path2)) {
-    stop("\"path1\" and \"path2\" must be character strings")
-  }
+  else if(isTRUE(export)) {
+    if (!is.character(x = path1) | !is.character(x = path2)) {
+      stop("\"path1\" and \"path2\" must be character strings")
+    }
   
-  else if (length(x = path1) != 1L | length(x = path2) != 1L) {
-    stop("single character string for \"path1\" and \"path2\" expected")
+    else if (length(x = path1) != 1L | length(x = path2) != 1L) {
+      stop("single character string for \"path1\" and \"path2\" expected")
+    }  
   }
    
   else if (!missing(x = seed)) {
