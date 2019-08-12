@@ -22,7 +22,7 @@
 #' set.seed(seed = 123, kind = "Mersenne-Twister")
 #' myData <- mdg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100, f = f, thetas = thetas, link = "logit")
 
-mdg <- function(X, export, path1, path2, seed) {
+mdg <- function(X, export, path1, path2, seed, ...) {
   if (!is.integer(x = X)) {
     stop("\"X\" must be a positive integer")
   }
