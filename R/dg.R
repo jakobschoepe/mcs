@@ -125,6 +125,11 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, thetas, link
     # Rename generated random variables
     data.table::setnames(x = data_tmp, old = colnames(data_tmp), new = sapply(X = 1:ncol(data_tmp), FUN = function(i) {sprintf("X%d", i)}))
     
+    # Transform generated random variables if necessary
+    if (!missing(transf)) {
+      data_tmp[, names(transf) := lapply(X = .SD, FUN = function(var) {unname(sapply(X = paste(var, transf[names(x) == var]), FUN = function(x) {eval(parse(text = x))}))}, .SDcols = names(transf)]
+    }
+    
     # Predefine linear combinations
     b <- model.matrix(f, data = data_tmp) %*% thetas
   
