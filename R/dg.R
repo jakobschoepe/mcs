@@ -93,7 +93,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thet
   }
   
   else if (length(x = thetas) != length(x = attr(x = terms(f), which = "term.labels")) + 1) {
-    stop(paste("\"thetas\" must be a numeric vector of length", length(x = attr(x = terms(f), which = "term.labels")) + 1))
+    stop("\"thetas\" must be a numeric vector of length", length(x = attr(x = terms(f), which = "term.labels")) + 1)
   }
            
   else if (!is.character(x = link)) {
