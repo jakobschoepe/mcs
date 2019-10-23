@@ -127,7 +127,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thet
     
     # Transform generated random variables if necessary
     if (!missing(transf)) {
-      data_tmp <- transform(data_tmp, transf)
+      data_tmp <- eval(parse(text = paste0("transform(data_tmp, ", transf, ")")))
     }
     
     # Predefine linear combinations
