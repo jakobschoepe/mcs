@@ -29,7 +29,7 @@
 #'
 #' myData <- dg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
 
-dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, thetas, link) {
+dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thetas, link) {
   # Check passed arguments to smoothly run subsequent commands
   if (!is.integer(x = dim)) {
     stop("\"dim\" must be a positive integer")
@@ -127,7 +127,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, f, thetas, link
     
     # Transform generated random variables if necessary
     if (!missing(transf)) {
-      data_tmp[, names(transf) := lapply(X = .SD, FUN = function(var) {unname(sapply(X = paste(var, transf[names(x) == var]), FUN = function(x) {eval(parse(text = x))}))}, .SDcols = names(transf)]
+      data_tmp <- transform(data_tmp, transf)
     }
     
     # Predefine linear combinations
