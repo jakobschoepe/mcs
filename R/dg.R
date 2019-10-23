@@ -8,6 +8,7 @@
 #' @param margins A character vector specifying the marginal probability distributions (see \code{copula} package).
 #' @param paramMargins An object of class \code{list} giving the parameter values of the marginal probability distributions (see \code{copula} package).
 #' @param n An integer specifying the number of observations to be generated.
+#' @param transf A character string specifying transformations of random variables.
 #' @param f A model formula.
 #' @param thetas A numeric vector specifying the true model parameters.
 #' @param link A character string specifying the link function for model fitting ("log" or "logit").
@@ -127,7 +128,17 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thet
     
     # Transform generated random variables if necessary
     if (!missing(transf)) {
-      data_tmp <- eval(parse(text = paste0("transform(data_tmp, ", transf, ")")))
+      if (!is.character(transf)) {
+        stop("\"transf\" must be a character string")
+      }
+      
+      else if (length(x = transf) != 1L) {
+        stop("single character string for \"transf\" expected")
+      }
+        
+      else {
+        data_tmp <- eval(parse(text = paste0("transform(data_tmp, ", transf, ")")))
+      }
     }
     
     # Predefine linear combinations
