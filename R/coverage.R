@@ -1,13 +1,13 @@
-#' @title
-#' @description
-#' @usage
-#' @param
-#' @param
-#' @param
+#' @title Assess the coverage of estimated confidence intervals
+#' @description 
+#' @usage coverage(x, varnames, true)
+#' @param x A numeric matrix containing the confidence interval limits.
+#' @param varnames A character vector giving the names i
+#' @param true A numeric vector giving the true value(s).
 #' @details
 #' @return
-#' @references
-#' @notes
+#' @references Morris TP, White IR, Crowther MJ (2019) Using simulation studies to evaluate statistical methods. Stat Med 38:2074-2102
+#' @notes Please note that \code{coverage} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
 
 coverage <- function(x, varnames, true) {
@@ -38,7 +38,7 @@ coverage <- function(x, varnames, true) {
   else {
     n <- nrow(x = x)
     tmp1 <- sapply(X = 1:length(x = varnames), function(i) {
-      tmp1 <- sum(x[,grep(pattern = paste0(varnames[[i]], ".cil"), colnames(x))] <= true[[i]] & x[,grep(pattern = paste0(varnames[[i]], ".ciu"), colnames(x))] >= true[[i]]) / n 
+    tmp1 <- sum(x[,grep(pattern = paste0(varnames[[i]], ".cil"), colnames(x))] <= true[[i]] & x[,grep(pattern = paste0(varnames[[i]], ".ciu"), colnames(x))] >= true[[i]]) / n 
     })
     tmp2 <- sqrt((tmp1 * (1 - tmp1)) / n)
     tmp3 <- cbind(tmp1, tmp2)
