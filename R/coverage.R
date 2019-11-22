@@ -39,7 +39,6 @@ coverage <- function(x, varnames, true) {
     n <- nrow(x = x)
     tv <- rep(x = true, each = n)
     tmp1 <- sapply(X = 1:length(x = varnames), function(i) {
-      c <- grep(pattern = varnames[[i]], colnames(x))
       tmp1 <- sum(x[,grep(pattern = paste0(varnames[[i]], ".cil"), colnames(x))] <= true[[i]] & x[,grep(pattern = paste0(varnames[[i]], ".ciu"), colnames(x))] >= true[[i]]) / n 
     })
     tmp2 <- sqrt((tmp1 * (1 - tmp1)) / n)
