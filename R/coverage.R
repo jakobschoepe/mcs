@@ -10,21 +10,13 @@
 #' @notes Please note that \code{coverage} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
 
-coverage <- function(x, varnames, true) {
+coverage <- function(x, true) {
   if (!is.matrix(x = x)) {
     stop("\"x\" must be a numeric matrix")
   }
   
   else if (!is.numeric(x = x)) {
     stop("\"x\" must be a numeric matrix")
-  }
-  
-  else if (!is.vector(x = varnames, mode = "character")) {
-    stop("\"x\" must be a character vector")
-  }
-  
-  else if (length(x = varnames) != (ncol(x = x) / 2)) {
-    stop("\"varnames\" must be a character vector of length ", (ncol(x = x) / 2))
   }
   
   else if (!is.vector(x = true, mode = "numeric")) {
@@ -37,6 +29,7 @@ coverage <- function(x, varnames, true) {
   
   else {
     n <- nrow(x = x)
+    varnames <- unique(x = substr(x = colnames(x = x), start = 1, stop = nchar(x = colnames(x = x)) - 4))
     tmp1 <- sapply(X = 1:length(x = varnames), function(i) {
     tmp1 <- sum(x[,grep(pattern = paste0(varnames[[i]], ".cil"), colnames(x))] <= true[[i]] & x[,grep(pattern = paste0(varnames[[i]], ".ciu"), colnames(x))] >= true[[i]]) / n 
     })
