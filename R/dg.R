@@ -1,22 +1,57 @@
-#' @title Generating pseudo-random data for Monte Carlo simulations using a normal copula.
-#' @description \code{dg} generates pseudo-random data for Monte Carlo simulations using a normal copula with user-defined marginal probability distributions.
-#' @usage dg(i, param, dim, dispstr, margins, paramMargins, n, f, betas, link) 
+#' @title Generating pseudo-random data for Monte Carlo simulations using a Gaussian copula.
+#' @description \code{dg()} generates pseudo-random data for Monte Carlo simulations using a Gaussian copula with user-defined marginal probability distributions.
+#' @usage dg(i, param, dim, dispstr, margins, paramMargins, n, transf, f, betas, link) 
 #' @param i Index of the repetition (can be ignored).
 #' @param param A numeric vector specifying the dispersion matrix (see \code{copula} package).
 #' @param dim An integer specifying the dimension of the copula (see \code{copula} package).
-#' @param dispstr A character string specifying the dispersion structure (see \code{copula} package): autoregressive of order 1 (ar1), exchangeable (ex), Toeplitz (toep), and unstructured (un).
+#' @param dispstr A character string specifying the dispersion structure (see \code{copula} package): autoregressive of order 1 ("ar1"), exchangeable ("ex"), Toeplitz ("toep"), and unstructured ("un").
 #' @param margins A character vector specifying the marginal probability distributions (see \code{copula} package).
 #' @param paramMargins An object of class \code{list} giving the parameter values of the marginal probability distributions (see \code{copula} package).
 #' @param n An integer specifying the number of observations to be generated.
 #' @param transf A character string specifying transformations of random variables.
 #' @param f A model formula.
-#' @param thetas A numeric vector specifying the true model parameters.
+#' @param thetas A numeric vector specifying the estimands.
 #' @param link A character string specifying the link function for model fitting ("log" or "logit").
+#' @details First-order autoregressive dispersion structure:
+#' \begin{equation*}
+#' \begin{pmatrix}
+#' 1&\rho_{1}&\rho_{1}^{2}\\
+#' \rho_{1}&1&\rho_{1}\\
+#' \rho_{1}^{2}&\rho_{1}&1\\
+#' \end{pmatrix}
+#' \end{equation*}
+#'
+#' Exchangeable dispersion structure:
+#' \begin{equation*}
+#' \begin{pmatrix}
+#' 1&\rho_{1}&\rho_{1}\\
+#' \rho_{1}&1&\rho_{1}\\
+#' \rho_{1}&\rho_{1}&1\\
+#' \end{pmatrix}
+#' \end{equation*}
+#'
+#' Toeplitz dispersion structure:
+#' \begin{equation*}
+#' \begin{pmatrix}
+#' 1&\rho_{1}&\rho_{2}\\
+#' \rho_{1}&1&\rho_{1}\\
+#' \rho_{2}&\rho_{1}&1\\
+#' \end{pmatrix}
+#' \end{equation*}
+#'
+#' Unstructured dispersion structure:
+#' \begin{equation*}
+#' \begin{pmatrix}
+#' 1&\rho_{1}&\rho_{2}\\
+#' \rho_{1}&1&\rho_{3}\\
+#' \rho_{2}&\rho_{3}&1\\
+#' \end{pmatrix}
+#' \end{equation*}
 #' @return A list containing the following elements:
 #' \item{seed}{An integer vector containing the state of the random number generator that was used to generate the data.}
 #' \item{data}{A data table containing pseudo-random generated data.}
 #' @references Yan J (2007) Enjoy the joy of copulas: With a package copula. J Stat Softw, 21:1-21
-#' @note Please note that \code{dg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' @notes Please note that \code{dg()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
 #' @example
 #' param <- c(0.0,
