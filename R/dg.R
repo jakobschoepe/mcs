@@ -1,6 +1,6 @@
 #' @title Generating pseudo-random data for Monte Carlo simulations using a Gaussian copula.
 #' @description \code{dg()} generates pseudo-random data for Monte Carlo simulations using a Gaussian copula with user-defined marginal probability distributions.
-#' @usage dg(i, param, dim, dispstr, margins, paramMargins, n, transf, f, betas, link) 
+#' @usage dg(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thetas, link) 
 #' @param i Index of the repetition (can be ignored).
 #' @param param A numeric vector specifying the dispersion matrix (see \code{copula} package).
 #' @param dim An integer specifying the dimension of the copula (see \code{copula} package).
