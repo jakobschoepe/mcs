@@ -12,48 +12,13 @@
 #' @param f A model formula.
 #' @param thetas A numeric vector specifying the estimands.
 #' @param link A character string specifying the link function for model fitting ("log" or "logit").
-#' @details First-order autoregressive dispersion structure:
-#' \begin{equation*}
-#' \begin{pmatrix}
-#' 1&\rho_{1}&\rho_{1}^{2}\\
-#' \rho_{1}&1&\rho_{1}\\
-#' \rho_{1}^{2}&\rho_{1}&1\\
-#' \end{pmatrix}
-#' \end{equation*}
-#'
-#' Exchangeable dispersion structure:
-#' \begin{equation*}
-#' \begin{pmatrix}
-#' 1&\rho_{1}&\rho_{1}\\
-#' \rho_{1}&1&\rho_{1}\\
-#' \rho_{1}&\rho_{1}&1\\
-#' \end{pmatrix}
-#' \end{equation*}
-#'
-#' Toeplitz dispersion structure:
-#' \begin{equation*}
-#' \begin{pmatrix}
-#' 1&\rho_{1}&\rho_{2}\\
-#' \rho_{1}&1&\rho_{1}\\
-#' \rho_{2}&\rho_{1}&1\\
-#' \end{pmatrix}
-#' \end{equation*}
-#'
-#' Unstructured dispersion structure:
-#' \begin{equation*}
-#' \begin{pmatrix}
-#' 1&\rho_{1}&\rho_{2}\\
-#' \rho_{1}&1&\rho_{3}\\
-#' \rho_{2}&\rho_{3}&1\\
-#' \end{pmatrix}
-#' \end{equation*}
 #' @return A list containing the following elements:
 #' \item{seed}{An integer vector containing the state of the random number generator that was used to generate the data.}
 #' \item{data}{A data table containing pseudo-random generated data.}
 #' @references Yan J (2007) Enjoy the joy of copulas: With a package copula. J Stat Softw, 21:1-21
 #' @notes Please note that \code{dg()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
-#' @example
+#' @examples
 #' param <- c(0.0,
 #'            0.3, 0.1,
 #'            0.0, 0.2, 0.5)
@@ -64,6 +29,7 @@
 #' thetas <- c(-3.10, 0.00, -0.45, 0.22, -0.16)
 #'
 #' myData <- dg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
+#' @export
 
 dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thetas, link) {
   # Check passed arguments to smoothly run subsequent commands
