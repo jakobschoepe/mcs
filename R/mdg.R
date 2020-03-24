@@ -10,7 +10,7 @@
 #' \item{seed}{A numeric vector containing the last state of the pseudo-random number generator.}
 #' @note Please note that \code{mdg()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
-#' @example
+#' @examples
 #' param <- c(0.0,
 #'            0.3, 0.1,
 #'            0.0, 0.2, 0.5)
