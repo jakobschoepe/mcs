@@ -3,17 +3,8 @@
 #' @usage bias(x, true)
 #' @param x A numeric matrix containing the estimate of the estimator of interest.
 #' @param true A numeric vector giving the estimand.
-#' @details The bias of an estimator of interest is derived from
-#' \begin{equation*}
-#' \frac{1}{n_{sim}}\displaystyle\sum_{i=1}^{n_{sim}} \hat{\theta}_{i} - \theta
-#' \end{equation*}
-#' where $n_{sim}$ is the number of repetitions of the Monte Carlo simulation, $\hat{\theta}_{i}$ is the estimate of the estimator of interest of the $i^{th}$ repetition, and $\theta$ is the estimand. The corresponding Monte Carlo standard error is derived from
-#' \begin{equation*}
-#' \sqrt{\frac{1}{n_{sim}(n_{sim} - 1)}\displaystyle\sum_{i=1}^{n_{sim}} (\hat{\theta}_{i} - \bar{\theta})^2}
-#' \end{equation*}
-#' where $n_{sim}$ is the number of repetitions of the Monte Carlo simulation, $\hat{\theta}_{i}$ is the estimate of the estimator of interest of the $i^{th}$ repetition, and $\bar{\theta}$ is the arithmetic mean of $\hat{\theta}_{i}$.
 #' @return A numeric matrix giving the estimated bias of the estimator of interest, and the corresponding Monte Carlo standard error.
-#' @notes Please note that \code{bias} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' @notes Please note that \code{bias()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @references Morris TP, White IR, Crowther MJ (2019) Using simulation studies to evaluate statistical methods. Stat Med 38:2074-2102
 #' @author Jakob Schöpe
 
