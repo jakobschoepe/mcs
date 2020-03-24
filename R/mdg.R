@@ -1,14 +1,14 @@
-#' @title Generating multiple pseudo-random data sets using \code{dg}.
-#' @description \code{mdg} is a wrapper function to generate multiple pseudo-random data sets using \code{dg}.
+#' @title Generating multiple pseudo-random data sets using \code{dg()}.
+#' @description \code{mdg()} is a wrapper function to generate multiple pseudo-random data sets using \code{dg()}.
 #' @usage mdg(X, export = FALSE, seed, ...) 
 #' @param X An integer indicating the number of pseudo-random data sets to generate.
 #' @param export A logical constant indicating if generated pseudo-random data sets should be exported to the working directory. 
-#' @param seed A optional integer vector containing the state of the random number generator ("Mersenne-Twister"). 
-#' @param ... Additional arguments for code{dg}.
+#' @param seed A optional numeric vector containing the state of the pseudo-random number generator ("Mersenne-Twister"). 
+#' @param ... Additional arguments for code{dg()}.
 #' @return A list containing the following elements:
 #' \item{data}{A list containing pseudo-random generated data sets.}
-#' \item{seed}{An integer vector containing the last state of the random number generator.}
-#' @note Please note that \code{mdg} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' \item{seed}{A numeric vector containing the last state of the pseudo-random number generator.}
+#' @note Please note that \code{mdg()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
 #' @example
 #' param <- c(0.0,
@@ -22,6 +22,7 @@
 #'
 #' set.seed(seed = 123, kind = "Mersenne-Twister")
 #' myData <- mdg(X = 10L, param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
+#' @export
 
 mdg <- function(X, export = FALSE, seed, ...) {
   # Check passed arguments to smoothly run subsequent commands
