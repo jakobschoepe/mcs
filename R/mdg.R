@@ -16,12 +16,24 @@
 #'            0.0, 0.2, 0.5)
 #'
 #' margins <- c("norm", "binom", "binom", "norm")
-#' paramMargins <- list(list(mean = 0, sd = 1), list(size = 1, prob = 0.3), list(size = 1, prob = .1), list(mean = 20, sd = 4))
+#' paramMargins <- list(list(mean = 0, sd = 1), 
+#'                      list(size = 1, prob = 0.3), 
+#'                      list(size = 1, prob = .1), 
+#'                      list(mean = 20, sd = 4))
 #' f <- ~ X1 + X2 + X3 + X4
 #' thetas <- c(-3.10, 0.00, -0.45, 0.22, -0.16)
 #'
 #' set.seed(seed = 123, kind = "Mersenne-Twister")
-#' myData <- mdg(X = 10L, param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
+#' myData <- mdg(X = 10L, 
+#'               param = param, 
+#'               dim = 4L, 
+#'               dispstr = "un", 
+#'               margins = margins, 
+#'               paramMargins = paramMargins, 
+#'               n = 100L, 
+#'               f = f, 
+#'               thetas = thetas, 
+#'               link = "logit")
 #' @export
 
 mdg <- function(X, export = FALSE, seed, ...) {
