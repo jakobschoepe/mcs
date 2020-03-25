@@ -15,20 +15,31 @@
 #' @return A list containing the following elements:
 #' \item{seed}{An integer vector containing the state of the random number generator that was used to generate the data.}
 #' \item{data}{A data table containing pseudo-random generated data.}
-#' @references Yan J (2007) Enjoy the joy of copulas: With a package copula. J Stat Softw, 21:1-21
-#' @notes Please note that \code{dg()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' @note Please note that \code{dg()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
+#' @references Yan J (2007) Enjoy the joy of copulas: With a package copula. J Stat Softw, 21:1-21
 #' @examples
 #' param <- c(0.0,
 #'            0.3, 0.1,
 #'            0.0, 0.2, 0.5)
 #'
 #' margins <- c("norm", "binom", "binom", "norm")
-#' paramMargins <- list(list(mean = 0, sd = 1), list(size = 1, prob = 0.3), list(size = 1, prob = .1), list(mean = 20, sd = 4))
+#' paramMargins <- list(list(mean = 0, sd = 1), 
+#'                      list(size = 1, prob = 0.3), 
+#'                      list(size = 1, prob = .1), 
+#'                      list(mean = 20, sd = 4))
 #' f <- ~ X1 + X2 + X3 + X4
 #' thetas <- c(-3.10, 0.00, -0.45, 0.22, -0.16)
 #'
-#' myData <- dg(param = param, dim = 4L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 100L, f = f, thetas = thetas, link = "logit")
+#' myData <- dg(param = param, 
+#'              dim = 4L, 
+#'              dispstr = "un", 
+#'              margins = margins, 
+#'              paramMargins = paramMargins, 
+#'              n = 100L, 
+#'              f = f, 
+#'              thetas = thetas, 
+#'              link = "logit")
 #' @export
 
 dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thetas, link) {
