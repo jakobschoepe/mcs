@@ -1,4 +1,4 @@
-#' @title Generating multiple pseudo-random data sets using \code{dg()}.
+#' @title Generating multiple pseudo-random data sets using \code{dg()}
 #' @description \code{mdg()} is a wrapper function to generate multiple pseudo-random data sets using \code{dg()}.
 #' @usage mdg(X, export = FALSE, seed, ...) 
 #' @param X An integer indicating the number of pseudo-random data sets to generate.
