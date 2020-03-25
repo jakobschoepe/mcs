@@ -104,8 +104,8 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thet
     stop("\"thetas\" must be a numeric vector")
   }
   
-  else if (length(x = thetas) != length(x = attr(x = terms(f), which = "term.labels")) + 1) {
-    stop("\"thetas\" must be a numeric vector of length ", length(x = attr(x = terms(f), which = "term.labels")) + 1)
+  else if (length(x = thetas) != length(x = attr(x = stats::terms(f), which = "term.labels")) + 1) {
+    stop("\"thetas\" must be a numeric vector of length ", length(x = attr(x = stats::terms(f), which = "term.labels")) + 1)
   }
            
   else if (!is.character(x = link)) {
@@ -154,7 +154,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thet
     }
     
     # Predefine linear combinations
-    b <- model.matrix(f, data = data_tmp) %*% thetas
+    b <- stats::model.matrix(f, data = data_tmp) %*% thetas
   
     # Compute individual probabilities for Y  
     if (link == "log") {
@@ -166,7 +166,7 @@ dg <- function(i, param, dim, dispstr, margins, paramMargins, n, transf, f, thet
     }
              
     # Generate a random variable from a binomial probability distribution
-    data_tmp$Y <- rbinom(n = n, size = 1, prob = pr)
+    data_tmp$Y <- stats::rbinom(n = n, size = 1, prob = pr)
     
     return(x = list(seed = seed, data = data_tmp))
   }
