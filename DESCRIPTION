@@ -1,0 +1,13 @@
+Package: mcs
+Type: Package
+Title: Helper Functions for Monte Carlo Simulations
+Version: 0.1.0
+Date: 2020-03-25
+Author: Jakob Schöpe
+Maintainer: Jakob Schöpe <jakob.schoepe@uni-saarland.de>
+Description: Implements helper functions for Monte Carlo simulations.
+License: GPL (>=3)
+Encoding: UTF-8
+Imports: copula, data.table, readr, stats
+LazyData: true
+RoxygenNote: 7.1.0
