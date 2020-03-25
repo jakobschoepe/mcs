@@ -3,9 +3,9 @@
 #' @usage empSE(x)
 #' @param x A numeric matrix containing the estimates of the estimator of interest.
 #' @return A numeric matrix giving the estimated empirical standard error of the estimator of interest, and the corresponding Monte Carlo standard error.
-#' @references Morris TP, White IR, Crowther MJ (2019) Using simulation studies to evaluate statistical methods. Stat Med 38:2074-2102
-#' @notes Please note that \code{empSE()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' @note Please note that \code{empSE()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @author Jakob Schöpe
+#' @references Morris TP, White IR, Crowther MJ (2019) Using simulation studies to evaluate statistical methods. Stat Med 38:2074-2102
 #' @export
 
 empSE <- function(x) {
