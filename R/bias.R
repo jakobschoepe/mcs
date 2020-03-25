@@ -4,9 +4,10 @@
 #' @param x A numeric matrix containing the estimate of the estimator of interest.
 #' @param true A numeric vector giving the estimand.
 #' @return A numeric matrix giving the estimated bias of the estimator of interest, and the corresponding Monte Carlo standard error.
-#' @notes Please note that \code{bias()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
+#' @note Please note that \code{bias()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
 #' @references Morris TP, White IR, Crowther MJ (2019) Using simulation studies to evaluate statistical methods. Stat Med 38:2074-2102
 #' @author Jakob Schöpe
+#' @export
 
 bias <- function(x, true) {
   if (!is.matrix(x = x)) {
