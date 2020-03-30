@@ -1,7 +1,7 @@
 #' @title Estimating the bias of an estimator of interest
 #' @description \code{bias()} estimates the bias of an estimator of interest in the context of a Monte Carlo simulation.
 #' @usage bias(x, true)
-#' @param x A numeric matrix containing the estimate of the estimator of interest.
+#' @param x A numeric matrix containing the estimates of the estimator of interest.
 #' @param true A numeric vector giving the estimand.
 #' @return A numeric matrix giving the estimated bias of the estimator of interest, and the corresponding Monte Carlo standard error.
 #' @note Please note that \code{bias()} was built as part of the design of a Monte Carlo simulation, and therefore serves a special-purpose only.
