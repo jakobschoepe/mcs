@@ -38,34 +38,34 @@
 
 mdg <- function(X, export = FALSE, seed, ...) {
   # Check passed arguments to smoothly run subsequent commands
-  if (length(x = X) != 1L) {
+  if (length(X) != 1L) {
     stop("single positive integer for \"X\" expected")  
   }
   
-  else if (!is.integer(x = X) | sign(x = X) != 1) {
+  else if (!is.integer(X) | sign(X) != 1) {
     stop("\"X\" must be a positive integer")
   }
   
-  else if (length(x = export) != 1L) {
+  else if (length(export) != 1L) {
     stop("single logical constant for \"export\" expected")  
   }
     
-  else if (!is.logical(x = export)) {
+  else if (!is.logical(export)) {
     stop("\"export\" must be a logical constant")
   }
     
-  else if (!exists(x = ".Random.seed")) {
+  else if (!exists(".Random.seed")) {
     stop("state for the pseudo-random number generator has not been set")
   }
   
   else {
-    if (!missing(x = seed)) {
-      if (!is.integer(x = seed) | length(x = seed) != 626) {
+    if (!missing(seed)) {
+      if (!is.integer(seed) | length(seed) != 626) {
         stop("\"seed\" has been misspecified")
       }
     
       else {
-        RNGkind(kind = "Mersenne-Twister")
+        RNGkind("Mersenne-Twister")
         .Random.seed <<- seed
       }
     }
@@ -73,7 +73,7 @@ mdg <- function(X, export = FALSE, seed, ...) {
     # Iterate dg() to generate multiple pseudo-random data sets
     data_tmp <- lapply(X = 1:X, FUN = function(i) {
         tmp <- dg(...)
-        if (isTRUE(x = export)) {
+        if (isTRUE(export)) {
           readr::write_csv(x = tmp$data, path = sprintf(paste0("SimData", format(Sys.time(), "_%Y%m%d_%H%M%S_"), "%d.csv"), i))
         }
         return(tmp$data)
