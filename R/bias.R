@@ -10,11 +10,7 @@
 #' @export
 
 bias <- function(x, true) {
-  if (!is.matrix(x = x)) {
-    stop("\"x\" must be a numeric matrix")
-  }
-  
-  else if (!is.numeric(x = x)) {
+  if (!is.matrix(x) | !is.numeric(x)) {
     stop("\"x\" must be a numeric matrix")
   }
   
