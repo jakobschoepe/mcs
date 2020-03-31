@@ -10,11 +10,7 @@
 #' @export
 
 coverage <- function(x, true) {
-  if (!is.matrix(x = x)) {
-    stop("\"x\" must be a numeric matrix")
-  }
-  
-  else if (!is.numeric(x = x)) {
+  if (!is.matrix(x) | !is.numeric(x)) {
     stop("\"x\" must be a numeric matrix")
   }
   
@@ -22,15 +18,15 @@ coverage <- function(x, true) {
     stop("\"true\" must be a numeric vector")
   }
   
-  else if (length(x = true) != (ncol(x = x) / 2)) {
-    stop("\"true\" must be a numeric vector of length ", (ncol(x = x) / 2))
+  else if (length(true) != (ncol(x) / 2)) {
+    stop("\"true\" must be a numeric vector of length ", (ncol(x) / 2))
   }
   
   else {
-    n <- nrow(x = x)
-    varnames <- unique(x = substr(x = colnames(x = x), start = 1, stop = nchar(x = colnames(x = x)) - 4))
-    tmp1 <- sapply(X = 1:length(x = varnames), function(i) {
-    tmp1 <- sum(x[,grep(pattern = paste0(varnames[[i]], ".cil"), colnames(x))] <= true[[i]] & x[,grep(pattern = paste0(varnames[[i]], ".ciu"), colnames(x))] >= true[[i]]) / n 
+    n <- nrow(x)
+    varnames <- unique(substr(x = colnames(x), start = 1, stop = nchar(colnames(x)) - 4))
+    tmp1 <- sapply(X = 1:length(varnames), FUN = function(i) {
+      tmp1 <- sum(x[,grep(pattern = paste0(varnames[[i]], ".cil"), colnames(x))] <= true[[i]] & x[,grep(pattern = paste0(varnames[[i]], ".ciu"), colnames(x))] >= true[[i]]) / n 
     })
     tmp2 <- sqrt((tmp1 * (1 - tmp1)) / n)
     tmp3 <- cbind(tmp1, tmp2)
