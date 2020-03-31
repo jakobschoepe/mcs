@@ -10,12 +10,8 @@
 #' @export
 
 mse <- function(x, true) {
-  if (!is.matrix(x = x)) {
-    stop("\"object\" must be a numeric matrix")
-  }
-  
-  else if (!is.numeric(x = x)) {
-    stop("\"object\" must be a numeric matrix")
+  if (!is.matrix(x) | !is.numeric(x)) {
+    stop("\"x\" must be a numeric matrix")
   }
   
   else if (!is.vector(x = true, mode = "numeric")) {
@@ -30,7 +26,7 @@ mse <- function(x, true) {
     n <- nrow(x)
     tv <- rep(x = true, each = n)
     tmp1 <- colSums((x - tv)^2) / n
-    tmp2 <- sqrt(x = colSums(((x - tv)^2 - rep(x = tmp1, each = n))^2) / (n * (n - 1)))
+    tmp2 <- sqrt(colSums(((x - tv)^2 - rep(x = tmp1, each = n))^2) / (n * (n - 1)))
     tmp3 <- cbind(tmp1, tmp2)
     rownames(tmp3) <- colnames(x)
     colnames(tmp3) <- c("MSE", "SE")
