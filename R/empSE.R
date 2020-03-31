@@ -9,12 +9,8 @@
 #' @export
 
 empSE <- function(x) {
-  if (!is.matrix(x = x)) {
-    stop("\"object\" must be a numeric matrix")
-  }
-  
-  else if (!is.numeric(x = x)) {
-    stop("\"object\" must be a numeric matrix")
+  if (!is.matrix(x) | !is.numeric(x)) {
+    stop("\"x\" must be a numeric matrix")
   }
   
   else {
