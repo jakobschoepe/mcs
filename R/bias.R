@@ -27,7 +27,7 @@ bias <- function(x, true) {
     tv <- rep(x = true, each = n)
     cm <- rep(x = colMeans(x), each = n)
     tmp1 <- colSums(x - tv) / n
-    tmp2 <- sqrt(x = colSums((x - cm)^2) / (n * (n - 1)))
+    tmp2 <- sqrt(colSums((x - cm)^2) / (n * (n - 1)))
     tmp3 <- cbind(tmp1, tmp2)
     rownames(tmp3) <- colnames(x)
     colnames(tmp3) <- c("Bias", "SE")
