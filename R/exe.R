@@ -37,3 +37,26 @@ simData_0500_48 <- mdg(X = 750L, export = TRUE, seed = simData_0500_24$seed, par
 simData_1000_12 <- mdg(X = 750L, export = TRUE, seed = simData_0500_48$seed, param = param, dim = 16L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 1000L, transf = transf, f = f, thetas = thetas_12, link = "logit")
 simData_1000_24 <- mdg(X = 750L, export = TRUE, seed = simData_1000_12$seed, param = param, dim = 16L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 1000L, transf = transf, f = f, thetas = thetas_24, link = "logit")
 simData_1000_48 <- mdg(X = 750L, export = TRUE, seed = simData_1000_24$seed, param = param, dim = 16L, dispstr = "un", margins = margins, paramMargins = paramMargins, n = 1000L, transf = transf, f = f, thetas = thetas_48, link = "logit")
+
+f <- function(data) {
+  out <- tryCatch({
+    null <- glm(formula = Y ~ 1, family = binomial, data = data)
+    full <- glm(formula = Y ~ X1 + X2 + X3 + X4, family = binomial, data = data)
+    fit <- coef(step(object = null, scope = list(upper = full), direction = "both", trace = 0, k = 2))
+    return(fit)},
+    error = function(cond) {
+      fit <- rep(NA, times = 5)
+      names(fit) <- c("(Intercept)", "X1", "X2", "X3", "X4")
+      return(fit)})
+  return(out)
+}
+
+set.seed(5689)
+seed <- as.integer(unique(sample(1:10e+8, 5)))
+
+
+out <- lapply(1:2, function(i) {
+  data <- simData_0250_12$data[[i]]
+  out <- peims(f = f, data = data, size = 250L, replace = TRUE, k = 10000L, seed = seed[[i]], ncpus = 4L)
+  return(out)
+})
