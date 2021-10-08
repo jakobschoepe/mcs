@@ -9,5 +9,4 @@ Description: Implements helper functions for Monte Carlo simulations.
 License: GPL (>=3)
 Encoding: UTF-8
 Imports: copula, data.table, readr, stats
-LazyData: true
 RoxygenNote: 7.1.0
